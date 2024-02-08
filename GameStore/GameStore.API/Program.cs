@@ -3,8 +3,28 @@ using Asp.Versioning.ApiExplorer;
 using GameStore.API;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Events;
+
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    // .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    // .MinimumLevel.Override("GameStore.API.Controllers.CatalogController", LogEventLevel.Debug)
+    .WriteTo.Console(LogEventLevel.Debug)
+    .WriteTo.File("logs/gamestoreapi.txt", LogEventLevel.Information, rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+    // var logger = new LoggerConfiguration()
+    //     .ReadFrom.Configuration(configuration)
+    //     .CreateLogger();    
 
 var builder = WebApplication.CreateBuilder(args);
+
+// builder.Logging.ClearProviders();
+// builder.Logging.AddConsole();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddMongoDb(builder.Configuration);
