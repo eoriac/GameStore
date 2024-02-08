@@ -8,26 +8,21 @@ namespace GameStore.API;
 
     public class SwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
     {
-        // private readonly IApiVersionDescriptionProvider apiVersionProvider;
+        private readonly IApiVersionDescriptionProvider apiVersionProvider;
 
-        // public SwaggerOptions(
-        //     IApiVersionDescriptionProvider provider)
-        // {
-        //     this.apiVersionProvider = provider;
-        // }
-        public SwaggerOptions()
+        public SwaggerOptions(IApiVersionDescriptionProvider provider)
         {
-            System.Console.WriteLine("Entering SwaggerOptions");
+            this.apiVersionProvider = provider;
         }
 
         public void Configure(SwaggerGenOptions options)
         {
-            // foreach (var versionDescription in apiVersionProvider.ApiVersionDescriptions)
-            // {
-            var versionDescription = new ApiVersionDescription(new ApiVersion(1, 0), "Default_API");
+            foreach (var versionDescription in apiVersionProvider.ApiVersionDescriptions)
+            {
+                // var versionDescription = new ApiVersionDescription(new ApiVersion(1, 0), "Default_API");
 
-            options.SwaggerDoc(versionDescription.GroupName, CreateVersionInfo(versionDescription));
-            // }
+                options.SwaggerDoc(versionDescription.GroupName, CreateVersionInfo(versionDescription));
+            }
         }
 
         public void Configure(string name, SwaggerGenOptions options)

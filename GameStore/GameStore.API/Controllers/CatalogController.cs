@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GameStore.API;
 
+[Authorize]
 [ApiController]
 [Route("api/catalog")]
 public class CatalogController(IGameRepository gameRepository) : ControllerBase
@@ -13,6 +15,7 @@ public class CatalogController(IGameRepository gameRepository) : ControllerBase
     /// </summary>
     /// <returns>Pagination with games</returns>
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult Get()
     {
         var games = this.gameRepository.GetGames();
@@ -41,7 +44,7 @@ public class CatalogController(IGameRepository gameRepository) : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]    
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult Post(GameForCreateDto gameForCreate)
     {
         var game = new Game

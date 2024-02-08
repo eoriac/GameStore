@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 
 namespace GameStore.API;
@@ -45,26 +47,26 @@ public static class ServiceExtensions
             var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
             options.IncludeXmlComments(xmlCommentsFullPath);
 
-            // options.AddSecurityDefinition("GamesApiBearerAuth", new OpenApiSecurityScheme()
-            //     {
-            //         Type = SecuritySchemeType.Http,                    
-            //         Scheme = JwtBearerDefaults.AuthenticationScheme,
-            //         Description = "A valid token"
-            //     });
+            options.AddSecurityDefinition("GamesApiBearerAuth", new OpenApiSecurityScheme()
+                {
+                    Type = SecuritySchemeType.Http,                    
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Description = "A valid token"
+                });
 
-            // options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            // {
-            //     {
-            //         new OpenApiSecurityScheme
-            //         {
-            //             Reference = new OpenApiReference
-            //             {
-            //                 Type = ReferenceType.SecurityScheme,
-            //                 Id = "GamesApiBearerAuth"
-            //             }
-            //         }, new List<string>()
-            //     }
-            // });   
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "GamesApiBearerAuth"
+                        }
+                    }, new List<string>()
+                }
+            });   
         });        
 
         services.ConfigureOptions<SwaggerOptions>();
@@ -73,6 +75,7 @@ public static class ServiceExtensions
     }
 
     public static IServiceCollection AddApiVersioningConfiguration(this IServiceCollection services){
+
         services.AddApiVersioning(setupAction =>
         {
             setupAction.AssumeDefaultVersionWhenUnspecified = true;
@@ -82,13 +85,12 @@ public static class ServiceExtensions
                 new UrlSegmentApiVersionReader(), // /api/v1/*
                 new HeaderApiVersionReader("x-api-version"), // x-api-version:1.0
                 new MediaTypeApiVersionReader("x-api-version")); // Accept/Content-Type: application/json; x-api-version=1.0
-        });
-
-        // services.AddEndpointsApiExplorer(setup =>
-        // {
-        //     setup.GroupNameFormat = "'v'VVV";
-        //     setup.SubstituteApiVersionInUrl = true;
-        // });    
+        })
+        .AddApiExplorer(setup =>
+        {
+            setup.GroupNameFormat = $"'{Assembly.GetExecutingAssembly().GetName().Name} v'VVV";
+            setup.SubstituteApiVersionInUrl = true;
+        });    
 
         return services;    
     }
