@@ -6,6 +6,7 @@ namespace GameStore.API;
 [Authorize]
 [ApiController]
 [Route("api/catalog")]
+// [Route("api/v{version:apiVersion}/catalog")]
 public class CatalogController(IGameRepository gameRepository) : ControllerBase
 {
     private readonly IGameRepository gameRepository = gameRepository;

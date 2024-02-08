@@ -82,7 +82,7 @@ public static class ServiceExtensions
             setupAction.DefaultApiVersion = new ApiVersion(1, 0);
             setupAction.ReportApiVersions = true;
             setupAction.ApiVersionReader = ApiVersionReader.Combine(
-                new UrlSegmentApiVersionReader(), // /api/v1/*
+                // new UrlSegmentApiVersionReader(), // /api/v1/*
                 new HeaderApiVersionReader("x-api-version"), // x-api-version:1.0
                 new MediaTypeApiVersionReader("x-api-version")); // Accept/Content-Type: application/json; x-api-version=1.0
         })
