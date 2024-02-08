@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GameStore.API</name>
+    </assembly>
+    <members>
+        <member name="M:GameStore.API.CatalogController.Get">
+            <summary>
+            Retrieve all games
+            </summary>
+            <returns>Pagination with games</returns>
+        </member>
+        <member name="M:GameStore.API.CatalogController.Get(System.String)">
+            <summary>
+            Retrieve one game based on ID
+            </summary>
+            <param name="id">Game ID</param>
+            <returns>Game or not found</returns>
+        </member>
+    </members>
+</doc>

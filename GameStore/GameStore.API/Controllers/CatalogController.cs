@@ -8,6 +8,10 @@ public class CatalogController(IGameRepository gameRepository) : ControllerBase
 {
     private readonly IGameRepository gameRepository = gameRepository;
 
+    /// <summary>
+    /// Retrieve all games
+    /// </summary>
+    /// <returns>Pagination with games</returns>
     [HttpGet]
     public IActionResult Get()
     {
@@ -16,15 +20,28 @@ public class CatalogController(IGameRepository gameRepository) : ControllerBase
         return Ok(games);
     }
 
+    /// <summary>
+    /// Retrieve one game based on ID
+    /// </summary>
+    /// <param name="id">Game ID</param>
+    /// <returns>Game or not found</returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult Get(string id)
     {
         var game = this.gameRepository.GetGame(id);
+
+        if (game == null){
+            return NotFound();
+        }
 
         return Ok(game);
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]    
     public IActionResult Post(GameForCreateDto gameForCreate)
     {
         var game = new Game
