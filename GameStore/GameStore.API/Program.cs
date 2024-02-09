@@ -26,17 +26,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 // Add services to the container.
-builder.Services.AddMongoDb(builder.Configuration);
+builder.Services.RegisterDataLayer(builder.Configuration);
 
 builder.Services.AddControllers();
 
 builder.Services.AddApiVersioningConfiguration();
 
 builder.Services.AddSwaggerConfiguration();
-
-builder.Services.AddScoped<IGameRepository, GameRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -53,6 +52,17 @@ builder.Services
                             Encoding.ASCII.GetBytes(builder.Configuration["Authentication:SecretForKey"]))
                     };
                 });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CanGetLibraryGame", UserRolePolicies.CanGetLibraryGame());
+
+    options.AddPolicy("OwnGame", policyBuilder => {
+        policyBuilder.RequireAuthenticatedUser();
+        policyBuilder.AddRequirements(new MustOwnGameRequirement());
+    });
+});
+
 
 var app = builder.Build();
 
@@ -73,6 +83,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// app.UseRouting();
 
 app.UseAuthentication();
 

@@ -37,3 +37,12 @@ _id = ObjectId()
 # Mongo Driver C#
 https://www.nuget.org/packages/MongoDB.Driver
 https://www.mongodb.com/docs/drivers/csharp/current/
+
+
+# EF dotnet cli
+dotnet tool install --global dotnet-ef
+
+
+# Automapper
+## Property Converter
+https://docs.automapper.org/en/latest/Value-converters.html

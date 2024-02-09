@@ -1,8 +1,18 @@
 ﻿
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+
 namespace GameStore.API;
 
-public class UserRepository : IUserRepository
+public class UserRepository(
+    ILogger<UserRepository> logger,
+    IMongoDatabase mongoDatabase, 
+    IOptions<GameStoreDatabaseSettings> options) : IUserRepository
+
 {
+    private readonly IMongoCollection<Game> gameCollection = mongoDatabase.GetCollection<Game>(options.Value.UsersCollection);
+    private readonly ILogger<UserRepository> logger = logger;
+
     public Task DeleteUserAsync(string id)
     {
         throw new NotImplementedException();

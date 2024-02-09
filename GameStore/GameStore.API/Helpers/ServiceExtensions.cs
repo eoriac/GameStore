@@ -9,7 +9,7 @@ namespace GameStore.API;
 
 public static class ServiceExtensions
 {
-    public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterDataLayer(this IServiceCollection services, IConfiguration configuration)
     {
 
         /*
@@ -32,6 +32,11 @@ public static class ServiceExtensions
 
             return client.GetDatabase(options.Value.DatabaseName);    
         });
+
+        services.AddScoped<IGameRepository, GameRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IGameLibraryRepository, GameLibraryRepository>();
+
 
         return services;
     }

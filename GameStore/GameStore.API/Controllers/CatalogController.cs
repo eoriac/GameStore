@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameStore.API;
@@ -7,9 +8,10 @@ namespace GameStore.API;
 [ApiController]
 [Route("api/catalog")]
 // [Route("api/v{version:apiVersion}/catalog")]
-public class CatalogController(IGameRepository gameRepository) : ControllerBase
+public class CatalogController(IGameRepository gameRepository, IMapper mapper) : ControllerBase
 {
     private readonly IGameRepository gameRepository = gameRepository;
+    private readonly IMapper mapper = mapper;
 
     /// <summary>
     /// Retrieve all games
@@ -19,7 +21,7 @@ public class CatalogController(IGameRepository gameRepository) : ControllerBase
     [AllowAnonymous]
     public IActionResult Get()
     {
-        var games = this.gameRepository.GetGames();
+        var games = this.mapper.Map<IList<Game>>(this.gameRepository.GetGames());
 
         return Ok(games);
     }
@@ -43,17 +45,20 @@ public class CatalogController(IGameRepository gameRepository) : ControllerBase
         return Ok(game);
     }
 
+    [Authorize(Roles = "GoldUser")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult Post(GameForCreateDto gameForCreate)
     {
-        var game = new Game
-        {
-            Name = gameForCreate.Name,
-            Description = gameForCreate.Description,
-            Price = gameForCreate.Price
-        };
+        // var game = new Game
+        // {
+        //     Name = gameForCreate.Name,
+        //     Description = gameForCreate.Description,
+        //     Price = gameForCreate.Price
+        // };
+
+        var game = this.mapper.Map<GameForCreateDto, Game>(gameForCreate);
 
         this.gameRepository.AddGame(game);
         
@@ -73,6 +78,8 @@ public class CatalogController(IGameRepository gameRepository) : ControllerBase
         game.Name = gameForUpdate.Name;
         game.Description = gameForUpdate.Description;
         game.Price = gameForUpdate.Price;
+
+        // game = this.mapper.Map<Game>(gameForUpdate);
 
         this.gameRepository.UpdateGame(game);
 

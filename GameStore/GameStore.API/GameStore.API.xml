@@ -17,5 +17,54 @@
             <param name="id">Game ID</param>
             <returns>Game or not found</returns>
         </member>
+        <member name="T:GameStore.API.GameLibraryRepository">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="mongoDatabase"></param>
+            <param name="options"></param>
+        </member>
+        <member name="M:GameStore.API.GameLibraryRepository.#ctor(Microsoft.Extensions.Logging.ILogger{GameStore.API.GameLibraryRepository},MongoDB.Driver.IMongoDatabase,Microsoft.Extensions.Options.IOptions{GameStore.API.GameStoreDatabaseSettings})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="mongoDatabase"></param>
+            <param name="options"></param>
+        </member>
+        <member name="M:GameStore.API.GameLibraryRepository.GetLibraryGame(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="gameId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameStore.API.GameLibraryRepository.GetLibraryGameAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="gameId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GameStore.API.GameLibraryRepository.GetLibraryGames(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GameStore.API.GameLibraryRepository.AddLibrary(GameStore.API.Library)">
+            <summary>
+            
+            </summary>
+            <param name="libraryGame"></param>
+        </member>
+        <member name="M:GameStore.API.GameLibraryRepository.GetLibraryGamesAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

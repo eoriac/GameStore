@@ -4,6 +4,8 @@ public interface IGameRepository
 {
     IList<Game> GetGames();
 
+    Task<IList<Game>> GetGamesAsync();
+
     Game? GetGame(string gameId);
 
     void AddGame(Game game);

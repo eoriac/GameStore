@@ -53,11 +53,12 @@ namespace GameStore.API;
 
             var claimsForToken = new List<Claim>
             {
-                new Claim("sub", "65c4aaa7f0f845d7419d3af0"),
+                //new Claim("sub", "65c4aaa7f0f845d7419d3af0"),
+                new Claim("sub", "65c617f0f5c5344f6db631f3"),
                 new Claim("name", user.Name),
                 new Claim("email", user.Email),
                 new Claim("company", "Steam"),
-                new Claim("role", "GoldUser")
+                new Claim("role", "NormalUser")
             };
 
             var jwtSecurityToken = new JwtSecurityToken(

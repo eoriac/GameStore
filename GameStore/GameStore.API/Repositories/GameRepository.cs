@@ -45,4 +45,13 @@ public class GameRepository(
 
         // this.logger.LogDebug(updateResult.ModifiedCount.ToString());
     }
+
+    public async Task<IList<Game>> GetGamesAsync()
+    {
+        var gamesCursor = await gameCollection.FindAsync(_ => true);
+
+        var results = gamesCursor.ToList();
+
+        return results;
+    }
 }
