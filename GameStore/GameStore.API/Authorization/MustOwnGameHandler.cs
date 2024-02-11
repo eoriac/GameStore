@@ -19,8 +19,7 @@ public class MustOwnGameHandler(
 
         logger.LogDebug("Get route user " + routeUserId);
 
-        // var userId = context.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
-        var userClaimId = context.User.Claims.FirstOrDefault(cm => cm.Type == "sub")?.Value;
+        var userClaimId = context.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
 
         logger.LogDebug("Get user claim " + userClaimId);
 

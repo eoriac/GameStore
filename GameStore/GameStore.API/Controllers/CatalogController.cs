@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameStore.API;
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="gameRepository"></param>
+/// <param name="mapper"></param>
 [Authorize]
 [ApiController]
 [Route("api/catalog")]
@@ -45,7 +50,7 @@ public class CatalogController(IGameRepository gameRepository, IMapper mapper) :
         return Ok(game);
     }
 
-    [Authorize(Roles = "GoldUser")]
+    [Authorize(Policy = "CanCreateLibraryGame")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -86,6 +91,7 @@ public class CatalogController(IGameRepository gameRepository, IMapper mapper) :
         return NoContent();
     }
 
+    [Authorize("OwnGame")]
     [HttpDelete("{id}")]
     public IActionResult Delete(string id)
     {        

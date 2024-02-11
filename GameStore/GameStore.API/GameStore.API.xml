@@ -4,6 +4,54 @@
         <name>GameStore.API</name>
     </assembly>
     <members>
+        <member name="T:GameStore.API.UserRolePolicies">
+            <summary>
+            User Policies
+            </summary>
+        </member>
+        <member name="M:GameStore.API.UserRolePolicies.CanGetLibraryGame">
+            <summary>
+            Policy to allow get items from library
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GameStore.API.UserRolePolicies.CanCreateLibraryGame">
+            <summary>
+            Authorization policy to allow the creation of a Game
+            </summary>
+            <returns>Policy</returns>
+        </member>
+        <member name="T:GameStore.API.AuthenticationController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:GameStore.API.AuthenticationController.#ctor(GameStore.API.IUserRepository,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:GameStore.API.AuthenticationController.Authenticate(GameStore.API.AuthenticationDto)">
+            <summary>
+            
+            </summary>
+            <param name="authenticationRequestBody"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GameStore.API.CatalogController">
+            <summary>
+            
+            </summary>
+            <param name="gameRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:GameStore.API.CatalogController.#ctor(GameStore.API.IGameRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="gameRepository"></param>
+            <param name="mapper"></param>
+        </member>
         <member name="M:GameStore.API.CatalogController.Get">
             <summary>
             Retrieve all games
@@ -16,6 +64,68 @@
             </summary>
             <param name="id">Game ID</param>
             <returns>Game or not found</returns>
+        </member>
+        <member name="T:GameStore.API.UsersController">
+            <summary>
+            
+            </summary>
+            <param name="userRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:GameStore.API.UsersController.#ctor(GameStore.API.IUserRepository,AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="userRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:GameStore.API.UsersController.GetUsers">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GameStore.API.UsersController.GetUser(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GameStore.API.AuthenticationDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:GameStore.API.AuthenticationDto.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:GameStore.API.AuthenticationDto.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:GameStore.API.User">
+            <summary>
+            User Entity
+            </summary>
+        </member>
+        <member name="P:GameStore.API.User.Id">
+            <summary>
+            User Id
+            </summary>
+        </member>
+        <member name="P:GameStore.API.User.Name">
+            <summary>
+            User Name
+            </summary>
+        </member>
+        <member name="P:GameStore.API.User.Email">
+            <summary>
+            User Email
+            </summary>
         </member>
         <member name="T:GameStore.API.GameLibraryRepository">
             <summary>

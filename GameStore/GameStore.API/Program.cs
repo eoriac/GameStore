@@ -2,6 +2,8 @@ using System.Text;
 using Asp.Versioning.ApiExplorer;
 using GameStore.API;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
@@ -53,9 +55,12 @@ builder.Services
                     };
                 });
 
-builder.Services.AddAuthorization(options =>
-{
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAuthorizationHandler, MustOwnGameHandler>();
+
+builder.Services.AddAuthorization(options => {
     options.AddPolicy("CanGetLibraryGame", UserRolePolicies.CanGetLibraryGame());
+    options.AddPolicy("CanCreateLibraryGame", UserRolePolicies.CanCreateLibraryGame());
 
     options.AddPolicy("OwnGame", policyBuilder => {
         policyBuilder.RequireAuthenticatedUser();
@@ -78,7 +83,7 @@ if (app.Environment.IsDevelopment())
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
         }
 
-        //options.RoutePrefix = "";        
+        //options.RoutePrefix = "";
     });
 }
 

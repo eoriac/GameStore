@@ -32,8 +32,6 @@ public class UserLibraryController : ControllerBase
         return Ok(libraryItemsCursor.ToList());
     }
     
-
-    //[Authorize(Roles = "GoldUser")]
     [HttpGet("{id}", Name = "GetLibraryGame")]
     public async Task<ActionResult<Library>> GetUserLibraryGameAsync(string userId, string id)
     {
@@ -42,6 +40,7 @@ public class UserLibraryController : ControllerBase
         return Ok(libraryItemsCursor);
     }
 
+    [Authorize(Policy = "OwnGame")]
     [HttpPost]
     public ActionResult<Library> PostUserLibraryGame(string userId, Library library)
     {

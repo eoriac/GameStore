@@ -18,5 +18,5 @@ public class UserDto
         }
     }
 
-    public ICollection<GameDto> GamesLibrary { get; set; } = new List<GameDto>();
+    public ICollection<GameDto> GamesLibrary { get; set; } = [];
 }
