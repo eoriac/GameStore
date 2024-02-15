@@ -58,6 +58,23 @@ builder.Services
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthorizationHandler, MustOwnGameHandler>();
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowedDevOrigin", policy => {
+        policy
+            .WithOrigins("https://gamestore-ui.dev.com")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .Build();
+    });
+
+    options.AddPolicy("AllowOnlyPOSTGET", policy => {
+        policy
+            .WithOrigins("https://localhost:7079", "http://localhost:5146")
+            .WithMethods("POST", "GET")
+            .Build();
+    });
+});
+
 builder.Services.AddAuthorization(options => {
     options.AddPolicy("CanGetLibraryGame", UserRolePolicies.CanGetLibraryGame());
     options.AddPolicy("CanCreateLibraryGame", UserRolePolicies.CanCreateLibraryGame());
@@ -89,11 +106,29 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// app.UseRouting();
+// app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseCors();
+
+app.UseMiddleware<AddSecurityHeadersMiddleware>();
+
+app.Use((ctx, next) => {
+
+    // Some headers can't be removed
+    ctx.Response.Headers.Remove("Server");
+
+    // 
+    ctx.Response.Headers.Remove("x-header-to-remove");
+    
+    return next();
+});
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
 
 app.MapControllers();
 

@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameStore.API;
+
+
+// CORS
+// 
 
 [Route("api/users/{userId}/library")]
 [ApiController]
@@ -23,6 +28,11 @@ public class UserLibraryController : ControllerBase
         this.mapper = mapper;
     }
 
+    [HttpOptions]
+    public IActionResult Preflight(){
+        return NoContent();
+    }
+    
     [HttpGet]
     public async Task<ActionResult<ICollection<Library>>> GetUserLibraryAsync(string userId)
     {
@@ -49,7 +59,8 @@ public class UserLibraryController : ControllerBase
         return CreatedAtRoute("GetLibraryGame", new { userId = userId, id = library.Id }, library);
     }
 
-    [Authorize(Policy = "OwnGame")]
+    // [Authorize(Policy = "OwnGame")]
+    [EnableCors(PolicyName = "AllowOnlyPOSTGET")]
     [HttpDelete("{id}")]
     public ActionResult DeleteUserLibraryGame(string userId, string id)
     {
