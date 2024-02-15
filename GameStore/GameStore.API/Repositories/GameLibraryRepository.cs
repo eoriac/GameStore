@@ -62,11 +62,6 @@ public class GameLibraryRepository
     /// <param name="libraryGame"></param>
     public void AddLibrary(Library libraryGame)
     {
-        if (string.IsNullOrWhiteSpace(libraryGame.UserId) == true){
-            this.logger.LogError("UserId can't be empty");
-            throw new ArgumentException("UserId can't be empty");
-        }
-
         libraryCollection.InsertOne(libraryGame);
     }
 

@@ -54,7 +54,7 @@ public class CatalogController(IGameRepository gameRepository, IMapper mapper) :
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult Post(GameForCreateDto gameForCreate)
+    public ActionResult<Game> Post(GameForCreateDto gameForCreate)
     {
         // var game = new Game
         // {
