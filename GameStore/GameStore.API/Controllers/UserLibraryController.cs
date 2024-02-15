@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameStore.API;
 
-[Authorize(Policy = "OwnGame")]
 [Route("api/users/{userId}/library")]
 [ApiController]
 public class UserLibraryController : ControllerBase
@@ -48,5 +47,12 @@ public class UserLibraryController : ControllerBase
         this.gameLibraryRepository.AddLibrary(library);
 
         return CreatedAtRoute("GetLibraryGame", new { userId = userId, id = library.Id }, library);
-    }        
+    }
+
+    [Authorize(Policy = "OwnGame")]
+    [HttpDelete("{id}")]
+    public ActionResult DeleteUserLibraryGame(string userId, string id)
+    {
+        return Ok();
+    }
 }

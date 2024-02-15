@@ -91,7 +91,6 @@ public class CatalogController(IGameRepository gameRepository, IMapper mapper) :
         return NoContent();
     }
 
-    [Authorize("OwnGame")]
     [HttpDelete("{id}")]
     public IActionResult Delete(string id)
     {        
