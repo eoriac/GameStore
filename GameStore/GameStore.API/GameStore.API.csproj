@@ -6,7 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>GameStore.API.xml</DocumentationFile>    
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>true</InvariantGlobalization>    
+    <UserSecretsId>bf910b1c-e569-4f7f-878d-b6e4e57818f4</UserSecretsId>    
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>    
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +17,7 @@
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.0.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.1-dev-00561" />

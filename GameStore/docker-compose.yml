@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  gamestore.api:
+    image: ${DOCKER_REGISTRY-}gamestoreapi
+    build:
+      context: .
+      dockerfile: GameStore.API/Dockerfile
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=db_admin
+      - MONGO_INITDB_ROOT_PASSWORD=mongodb_1234
+    restart: on-failure
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb:/data/db
