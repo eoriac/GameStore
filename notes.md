@@ -46,3 +46,10 @@ dotnet tool install --global dotnet-ef
 # Automapper
 ## Property Converter
 https://docs.automapper.org/en/latest/Value-converters.html
+
+
+
+
+dotnet publish -c Release -o ./Release
+
+Extension> Azure App Service

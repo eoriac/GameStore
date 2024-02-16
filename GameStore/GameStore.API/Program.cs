@@ -89,8 +89,8 @@ builder.Services.AddAuthorization(options => {
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
     app.UseSwagger();
@@ -100,9 +100,9 @@ if (app.Environment.IsDevelopment())
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
         }
 
-        //options.RoutePrefix = "";
+        options.RoutePrefix = "";
     });
-}
+// }
 
 app.UseHttpsRedirection();
 
