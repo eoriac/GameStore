@@ -38,7 +38,7 @@ public class CatalogControllerTests
 
         var gameRepositoryMock = new Mock<IGameRepository>();
             gameRepositoryMock
-                .Setup(m => m.AddGame(It.Is<Game>(gm => gm.Id == "bla")))
+                .Setup(m => m.AddGame(It.IsAny<Game>()))
                 .Verifiable();
 
         var mapperMock = new Mock<IMapper>();
@@ -54,6 +54,7 @@ public class CatalogControllerTests
         var result = underTestController.Post(newGameDto);
 
         // Assert
+        gameRepositoryMock.Verify(gmock => gmock.AddGame(It.Is<Game>(gm => gm.Id == "someID")));
         var assertActionResult = Assert.IsType<ActionResult<Game>>(result);
         var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(assertActionResult.Result);
         Assert.Equal("Get", createdAtActionResult.ActionName);
